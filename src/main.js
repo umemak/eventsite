@@ -6,6 +6,7 @@ import {
   applyPolyfills,
   defineCustomElements,
 } from '@aws-amplify/ui-components/loader';
+import router from './router'
 
 Amplify.configure(aws_exports);
 applyPolyfills().then(() => {
