@@ -10,5 +10,18 @@
     <router-link to="/login">ログイン</router-link> |
     <router-link to="/mypage">マイページ</router-link>
   </div>
-  <router-view/>
+  <div v-if="isSignedIn">
+    <amplify-greetings></amplify-greetings>
+  </div>
+  <router-view />
 </template>
+
+<script>
+export default {
+  computed: {
+    isSignedIn() {
+      return this.$store.state.user !== null;
+    },
+  },
+};
+</script>

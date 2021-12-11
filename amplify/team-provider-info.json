@@ -10,6 +10,11 @@
       "StackName": "amplify-eventsite-dev-133825",
       "StackId": "arn:aws:cloudformation:ap-northeast-1:420659389960:stack/amplify-eventsite-dev-133825/cc967440-5699-11ec-baf6-0ea8351ee6f5",
       "AmplifyAppId": "d1tphcfscq4005"
+    },
+    "categories": {
+      "auth": {
+        "eventsite37556542": {}
+      }
     }
   }
 }

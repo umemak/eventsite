@@ -1,45 +1,55 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import store from "@/store/index.js";
+import Auth from "@aws-amplify/auth";
+import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
 
 const routes = [
   {
     path: '/',
     name: 'Top',
-    component: () => import('./views/Top.vue')
+    component: () => import('./views/Top.vue'),
   },
   {
     path: '/mypage',
     name: 'MyPage',
-    component: () => import('./views/MyPage.vue')
+    component: () => import('./views/MyPage.vue'),
+    meta: { requireAuth: true },
   },
   {
     path: '/cancel',
     name: 'Cancel',
-    component: () => import('./views/CancelConfirm.vue')
+    component: () => import('./views/CancelConfirm.vue'),
+    meta: { requireAuth: true },
   },
   {
     path: '/entry',
     name: 'Entry',
-    component: () => import('./views/EntryConfirm.vue')
+    component: () => import('./views/EntryConfirm.vue'),
+    meta: { requireAuth: true },
   },
   {
     path: '/event',
     name: 'Event',
-    component: () => import('./views/EventDetail.vue')
+    component: () => import('./views/EventDetail.vue'),
+    meta: { requireAuth: true },
   },
   {
     path: '/create',
     name: 'EventCreate',
-    component: () => import('./views/EventCreate.vue')
+    component: () => import('./views/EventCreate.vue'),
+    meta: { requireAuth: true },
   },
   {
     path: '/edit',
     name: 'EventEdit',
-    component: () => import('./views/EventEdit.vue')
+    component: () => import('./views/EventEdit.vue'),
+    meta: { requireAuth: true },
   },
   {
     path: '/search',
     name: 'Search',
-    component: () => import('./views/EventSearch.vue')
+    component: () => import('./views/EventSearch.vue'),
+    meta: { requireAuth: true },
   },
   {
     path: '/login',
@@ -49,13 +59,53 @@ const routes = [
   {
     path: '/mypage',
     name: 'MyPage',
-    component: () => import('./views/MyPage.vue')
+    component: () => import('./views/MyPage.vue'),
+    meta: { requireAuth: true },
   }
 ]
 
 const router = createRouter({
-  history:createWebHistory(process.env.BASE_URL),
+  history: createWebHistory(process.env.BASE_URL),
   routes
 })
+
+function getAuthenticatedUser() {
+  return Auth.currentAuthenticatedUser()
+    .then((data) => {
+      if (data && data.signInUserSession) {
+        store.commit("setUser", data);
+        return data;
+      }
+    })
+    .catch((e) => {
+      console.error(e);
+      store.commit("setUser", null);
+      return null;
+    });
+}
+
+let user;
+
+router.beforeResolve(async (to, from, next) => {
+  user = await getAuthenticatedUser();
+
+  if (to.name === "Login" && user) {
+    return next({ name: "MyPage" });
+  }
+
+  if (to.matched.some((record) => record.meta.requireAuth) && !user) {
+    return next({ name: "Login" });
+  }
+  return next();
+});
+
+onAuthUIStateChange((authState, authData) => {
+  if (authState === AuthState.SignedIn && authData) {
+    router.push({ name: "MyPage" });
+  }
+  if (authState === AuthState.SignedOut) {
+    router.push({ name: "Top" });
+  }
+});
 
 export default router
