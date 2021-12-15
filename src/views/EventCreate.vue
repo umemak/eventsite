@@ -1,11 +1,11 @@
 <template>
-    <div class="create">
+    <div id="EventCreate">
         <h1>イベント作成</h1>
         <ul>
-            <li>タイトル: <input v-model="name" /></li>
-            <li>開催日時: <input v-model="date" /></li>
-            <li>開催場所: <input v-model="place" /></li>
-            <li>公開期間: <input v-model="open" />～<input v-model="close" /></li>
+            <li>タイトル: <input type="text" v-model="name" /></li>
+            <li>開催日時: <input type="text" v-model="date" /></li>
+            <li>開催場所: <input type="text" v-model="place" /></li>
+            <li>公開期間: <input type="text" v-model="open" />～<input type="text" v-model="close" /></li>
         </ul>
         <button @click="createEvent">作成</button>
     </div>
