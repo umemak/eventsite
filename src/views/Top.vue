@@ -5,8 +5,13 @@
     <button @click="search">検索</button>
 
     <div v-for="item in events" :key="item.id">
-      <h3>{{ item.name }}</h3>
-      <p>{{ item.place }}</p>
+      <router-link
+        custom
+        v-slot="{ navigate }"
+        :to="{ name: 'Event', params: { eventId: item.id } }"
+      >
+        <button @click="navigate">{{ item.name }}@{{ item.place }}</button>
+      </router-link>
     </div>
   </div>
 </template>

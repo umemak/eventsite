@@ -16,21 +16,24 @@ const routes = [
     meta: { requireAuth: true },
   },
   {
-    path: '/cancel',
+    path: '/cancel/:eventId',
     name: 'Cancel',
     component: () => import('./views/CancelConfirm.vue'),
+    props: true,
     meta: { requireAuth: true },
   },
   {
-    path: '/entry',
+    path: '/entry/:eventId',
     name: 'Entry',
     component: () => import('./views/EntryConfirm.vue'),
+    props: true,
     meta: { requireAuth: true },
   },
   {
-    path: '/event',
+    path: '/event/:eventId',
     name: 'Event',
     component: () => import('./views/EventDetail.vue'),
+    props: true,
     meta: { requireAuth: true },
   },
   {
@@ -40,9 +43,10 @@ const routes = [
     meta: { requireAuth: true },
   },
   {
-    path: '/edit',
+    path: '/edit/:eventId',
     name: 'EventEdit',
     component: () => import('./views/EventEdit.vue'),
+    props: true,
     meta: { requireAuth: true },
   },
   {
