@@ -19,9 +19,29 @@
           <li>コメント２</li>
         </ul>
       </li>
+      <li>
+        参加者:
+        <ul>
+          <div v-for="item in event.entrants" :key="item.id">
+            <li>{{ item.name }}</li>
+          </div>
+        </ul>
+      </li>
     </ul>
-    <button @click="entry">参加エントリー</button>
-    <button @click="cancel">参加キャンセル</button>
+    <router-link
+      custom
+      v-slot="{ navigate }"
+      :to="{ name: 'Entry', params: { eventId: eventId } }"
+    >
+      <button @click="navigate">参加エントリー</button>
+    </router-link>
+    <router-link
+      custom
+      v-slot="{ navigate }"
+      :to="{ name: 'Cancel', params: { eventId: eventId } }"
+    >
+      <button @click="navigate">参加キャンセル</button>
+    </router-link>
   </div>
 </template>
 
@@ -43,12 +63,13 @@ export default {
         name: "",
         date: "",
         place: "",
+        entrants: [],
       },
     };
   },
   methods: {
     async getEvent() {
-      console.log(this.eventId)
+      console.log(this.eventId);
       await API.graphql({
         query: getEvent,
         variables: { id: this.eventId },
@@ -60,12 +81,6 @@ export default {
         .catch((error) => {
           console.log(error);
         });
-    },
-    entry: function () {
-      this.$router.push("/entry");
-    },
-    cancel: function () {
-      this.$router.push("/cancel");
     },
   },
 };
