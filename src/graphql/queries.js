@@ -13,22 +13,11 @@ export const getEvent = /* GraphQL */ `
       entrants {
         items {
           id
-          name
+          status
           createdAt
           updatedAt
           eventEntrantsId
-          eventExitsId
-        }
-        nextToken
-      }
-      exits {
-        items {
-          id
-          name
-          createdAt
-          updatedAt
-          eventEntrantsId
-          eventExitsId
+          userEntrantsId
         }
         nextToken
       }
@@ -74,9 +63,6 @@ export const listEvents = /* GraphQL */ `
         entrants {
           nextToken
         }
-        exits {
-          nextToken
-        }
         documents {
           nextToken
         }
@@ -95,32 +81,19 @@ export const getUser = /* GraphQL */ `
     getUser(id: $id) {
       id
       name
-      event {
-        id
-        name
-        date
-        place
-        open
-        close
-        entrants {
-          nextToken
+      entrants {
+        items {
+          id
+          status
+          createdAt
+          updatedAt
+          eventEntrantsId
+          userEntrantsId
         }
-        exits {
-          nextToken
-        }
-        documents {
-          nextToken
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
+        nextToken
       }
       createdAt
       updatedAt
-      eventEntrantsId
-      eventExitsId
     }
   }
 `;
@@ -134,20 +107,11 @@ export const listUsers = /* GraphQL */ `
       items {
         id
         name
-        event {
-          id
-          name
-          date
-          place
-          open
-          close
-          createdAt
-          updatedAt
+        entrants {
+          nextToken
         }
         createdAt
         updatedAt
-        eventEntrantsId
-        eventExitsId
       }
       nextToken
     }
@@ -166,9 +130,6 @@ export const getDocument = /* GraphQL */ `
         open
         close
         entrants {
-          nextToken
-        }
-        exits {
           nextToken
         }
         documents {
@@ -218,6 +179,7 @@ export const getComment = /* GraphQL */ `
   query GetComment($id: ID!) {
     getComment(id: $id) {
       id
+      content
       event {
         id
         name
@@ -226,9 +188,6 @@ export const getComment = /* GraphQL */ `
         open
         close
         entrants {
-          nextToken
-        }
-        exits {
           nextToken
         }
         documents {
@@ -240,7 +199,6 @@ export const getComment = /* GraphQL */ `
         createdAt
         updatedAt
       }
-      content
       createdAt
       updatedAt
       eventCommentsId
@@ -256,6 +214,7 @@ export const listComments = /* GraphQL */ `
     listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        content
         event {
           id
           name
@@ -266,10 +225,84 @@ export const listComments = /* GraphQL */ `
           createdAt
           updatedAt
         }
-        content
         createdAt
         updatedAt
         eventCommentsId
+      }
+      nextToken
+    }
+  }
+`;
+export const getEventUser = /* GraphQL */ `
+  query GetEventUser($id: ID!) {
+    getEventUser(id: $id) {
+      id
+      status
+      event {
+        id
+        name
+        date
+        place
+        open
+        close
+        entrants {
+          nextToken
+        }
+        documents {
+          nextToken
+        }
+        comments {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      user {
+        id
+        name
+        entrants {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+      eventEntrantsId
+      userEntrantsId
+    }
+  }
+`;
+export const listEventUsers = /* GraphQL */ `
+  query ListEventUsers(
+    $filter: ModelEventUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listEventUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        status
+        event {
+          id
+          name
+          date
+          place
+          open
+          close
+          createdAt
+          updatedAt
+        }
+        user {
+          id
+          name
+          createdAt
+          updatedAt
+        }
+        createdAt
+        updatedAt
+        eventEntrantsId
+        userEntrantsId
       }
       nextToken
     }

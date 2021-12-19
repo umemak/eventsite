@@ -9,8 +9,7 @@ type Event @model {
   place: String!
   open: AWSDateTime!
   close: AWSDateTime!
-  entrants: [User] @hasMany
-  exits: [User] @hasMany
+  entrants: [EventUser] @hasMany
   documents: [Document] @hasMany
   comments: [Comment] @hasMany
 }
@@ -18,7 +17,7 @@ type Event @model {
 type User @model {
   id: ID!
   name: String!
-  event: Event @belongsTo
+  entrants: [EventUser] @hasMany
 }
 
 type Document @model {
@@ -29,6 +28,13 @@ type Document @model {
 
 type Comment @model {
   id: ID!
-  event: Event @belongsTo
   content: String!
+  event: Event @belongsTo
+}
+
+type EventUser @model {
+  id: ID!
+  status: String!
+  event: Event @belongsTo
+  user: User @belongsTo
 }
