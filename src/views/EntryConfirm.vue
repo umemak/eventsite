@@ -11,8 +11,8 @@
 
 <script>
 import { API } from "aws-amplify";
-import { getEvent } from "../graphql/queries";
-import { updateEvent } from "@/graphql/mutations";
+import { getEvent, getUser } from "../graphql/queries";
+import { createEventUser } from "../graphql/mutations";
 
 export default {
   name: "EventEntry",
@@ -21,6 +21,7 @@ export default {
   },
   async created() {
     this.getEvent();
+    this.getUser();
     this.event.entrants.forEach((item) => {
       if (item.id == this.$store.state.user.id) {
         this.entried = true;
@@ -30,11 +31,7 @@ export default {
   data() {
     return {
       entried: false,
-      event: {
-        id: "",
-        name: "",
-        entrants: [],
-      },
+      event: null,
     };
   },
   methods: {
@@ -45,18 +42,28 @@ export default {
       })
         .then((result) => {
           console.log(result);
-          this.event.id = result.data.getEvent.id;
-          this.event.name = result.data.getEvent.name;
-          this.event.entrants = result.data.getEvent.entrants;
+          this.event = result.data.getEvent;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    async getUser() {
+      await API.graphql({
+        query: getUser,
+        variables: { id: this.$store.state.user.id },
+      })
+        .then((result) => {
+          console.log(result);
+          this.user = result.data.getUser;
         })
         .catch((error) => {
           console.log(error);
         });
     },
     async entry() {
-      this.event.entrants.push({ id: this.$store.state.user.id, name: this.$store.state.user.name });
       await API.graphql({
-        query: updateEvent,
+        query: createEventUser,
         variables: { input: this.event },
       })
         .then((result) => {
