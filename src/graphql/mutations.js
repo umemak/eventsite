@@ -13,37 +13,7 @@ export const createEvent = /* GraphQL */ `
       place
       open
       close
-      entrants {
-        items {
-          id
-          status
-          createdAt
-          updatedAt
-          eventEntrantsId
-          userEntrantsId
-        }
-        nextToken
-      }
-      documents {
-        items {
-          id
-          url
-          createdAt
-          updatedAt
-          eventDocumentsId
-        }
-        nextToken
-      }
-      comments {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-          eventCommentsId
-        }
-        nextToken
-      }
+      userID
       createdAt
       updatedAt
     }
@@ -61,37 +31,7 @@ export const updateEvent = /* GraphQL */ `
       place
       open
       close
-      entrants {
-        items {
-          id
-          status
-          createdAt
-          updatedAt
-          eventEntrantsId
-          userEntrantsId
-        }
-        nextToken
-      }
-      documents {
-        items {
-          id
-          url
-          createdAt
-          updatedAt
-          eventDocumentsId
-        }
-        nextToken
-      }
-      comments {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-          eventCommentsId
-        }
-        nextToken
-      }
+      userID
       createdAt
       updatedAt
     }
@@ -109,109 +49,7 @@ export const deleteEvent = /* GraphQL */ `
       place
       open
       close
-      entrants {
-        items {
-          id
-          status
-          createdAt
-          updatedAt
-          eventEntrantsId
-          userEntrantsId
-        }
-        nextToken
-      }
-      documents {
-        items {
-          id
-          url
-          createdAt
-          updatedAt
-          eventDocumentsId
-        }
-        nextToken
-      }
-      comments {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-          eventCommentsId
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createUser = /* GraphQL */ `
-  mutation CreateUser(
-    $input: CreateUserInput!
-    $condition: ModelUserConditionInput
-  ) {
-    createUser(input: $input, condition: $condition) {
-      id
-      name
-      entrants {
-        items {
-          id
-          status
-          createdAt
-          updatedAt
-          eventEntrantsId
-          userEntrantsId
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateUser = /* GraphQL */ `
-  mutation UpdateUser(
-    $input: UpdateUserInput!
-    $condition: ModelUserConditionInput
-  ) {
-    updateUser(input: $input, condition: $condition) {
-      id
-      name
-      entrants {
-        items {
-          id
-          status
-          createdAt
-          updatedAt
-          eventEntrantsId
-          userEntrantsId
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteUser = /* GraphQL */ `
-  mutation DeleteUser(
-    $input: DeleteUserInput!
-    $condition: ModelUserConditionInput
-  ) {
-    deleteUser(input: $input, condition: $condition) {
-      id
-      name
-      entrants {
-        items {
-          id
-          status
-          createdAt
-          updatedAt
-          eventEntrantsId
-          userEntrantsId
-        }
-        nextToken
-      }
+      userID
       createdAt
       updatedAt
     }
@@ -225,28 +63,10 @@ export const createDocument = /* GraphQL */ `
     createDocument(input: $input, condition: $condition) {
       id
       url
-      event {
-        id
-        name
-        date
-        place
-        open
-        close
-        entrants {
-          nextToken
-        }
-        documents {
-          nextToken
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      eventID
+      userID
       createdAt
       updatedAt
-      eventDocumentsId
     }
   }
 `;
@@ -258,28 +78,10 @@ export const updateDocument = /* GraphQL */ `
     updateDocument(input: $input, condition: $condition) {
       id
       url
-      event {
-        id
-        name
-        date
-        place
-        open
-        close
-        entrants {
-          nextToken
-        }
-        documents {
-          nextToken
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      eventID
+      userID
       createdAt
       updatedAt
-      eventDocumentsId
     }
   }
 `;
@@ -291,28 +93,10 @@ export const deleteDocument = /* GraphQL */ `
     deleteDocument(input: $input, condition: $condition) {
       id
       url
-      event {
-        id
-        name
-        date
-        place
-        open
-        close
-        entrants {
-          nextToken
-        }
-        documents {
-          nextToken
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      eventID
+      userID
       createdAt
       updatedAt
-      eventDocumentsId
     }
   }
 `;
@@ -324,28 +108,10 @@ export const createComment = /* GraphQL */ `
     createComment(input: $input, condition: $condition) {
       id
       content
-      event {
-        id
-        name
-        date
-        place
-        open
-        close
-        entrants {
-          nextToken
-        }
-        documents {
-          nextToken
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      eventID
+      userID
       createdAt
       updatedAt
-      eventCommentsId
     }
   }
 `;
@@ -357,28 +123,10 @@ export const updateComment = /* GraphQL */ `
     updateComment(input: $input, condition: $condition) {
       id
       content
-      event {
-        id
-        name
-        date
-        place
-        open
-        close
-        entrants {
-          nextToken
-        }
-        documents {
-          nextToken
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      eventID
+      userID
       createdAt
       updatedAt
-      eventCommentsId
     }
   }
 `;
@@ -390,28 +138,10 @@ export const deleteComment = /* GraphQL */ `
     deleteComment(input: $input, condition: $condition) {
       id
       content
-      event {
-        id
-        name
-        date
-        place
-        open
-        close
-        entrants {
-          nextToken
-        }
-        documents {
-          nextToken
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      eventID
+      userID
       createdAt
       updatedAt
-      eventCommentsId
     }
   }
 `;
@@ -423,38 +153,10 @@ export const createEventUser = /* GraphQL */ `
     createEventUser(input: $input, condition: $condition) {
       id
       status
-      event {
-        id
-        name
-        date
-        place
-        open
-        close
-        entrants {
-          nextToken
-        }
-        documents {
-          nextToken
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      user {
-        id
-        name
-        entrants {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      eventID
+      userID
       createdAt
       updatedAt
-      eventEntrantsId
-      userEntrantsId
     }
   }
 `;
@@ -466,38 +168,10 @@ export const updateEventUser = /* GraphQL */ `
     updateEventUser(input: $input, condition: $condition) {
       id
       status
-      event {
-        id
-        name
-        date
-        place
-        open
-        close
-        entrants {
-          nextToken
-        }
-        documents {
-          nextToken
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      user {
-        id
-        name
-        entrants {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      eventID
+      userID
       createdAt
       updatedAt
-      eventEntrantsId
-      userEntrantsId
     }
   }
 `;
@@ -509,38 +183,10 @@ export const deleteEventUser = /* GraphQL */ `
     deleteEventUser(input: $input, condition: $condition) {
       id
       status
-      event {
-        id
-        name
-        date
-        place
-        open
-        close
-        entrants {
-          nextToken
-        }
-        documents {
-          nextToken
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      user {
-        id
-        name
-        entrants {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      eventID
+      userID
       createdAt
       updatedAt
-      eventEntrantsId
-      userEntrantsId
     }
   }
 `;

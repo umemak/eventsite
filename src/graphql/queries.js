@@ -10,37 +10,7 @@ export const getEvent = /* GraphQL */ `
       place
       open
       close
-      entrants {
-        items {
-          id
-          status
-          createdAt
-          updatedAt
-          eventEntrantsId
-          userEntrantsId
-        }
-        nextToken
-      }
-      documents {
-        items {
-          id
-          url
-          createdAt
-          updatedAt
-          eventDocumentsId
-        }
-        nextToken
-      }
-      comments {
-        items {
-          id
-          content
-          createdAt
-          updatedAt
-          eventCommentsId
-        }
-        nextToken
-      }
+      userID
       createdAt
       updatedAt
     }
@@ -60,56 +30,7 @@ export const listEvents = /* GraphQL */ `
         place
         open
         close
-        entrants {
-          nextToken
-        }
-        documents {
-          nextToken
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
-export const getUser = /* GraphQL */ `
-  query GetUser($id: ID!) {
-    getUser(id: $id) {
-      id
-      name
-      entrants {
-        items {
-          id
-          status
-          createdAt
-          updatedAt
-          eventEntrantsId
-          userEntrantsId
-        }
-        nextToken
-      }
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listUsers = /* GraphQL */ `
-  query ListUsers(
-    $filter: ModelUserFilterInput
-    $limit: Int
-    $nextToken: String
-  ) {
-    listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
-      items {
-        id
-        name
-        entrants {
-          nextToken
-        }
+        userID
         createdAt
         updatedAt
       }
@@ -122,28 +43,10 @@ export const getDocument = /* GraphQL */ `
     getDocument(id: $id) {
       id
       url
-      event {
-        id
-        name
-        date
-        place
-        open
-        close
-        entrants {
-          nextToken
-        }
-        documents {
-          nextToken
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      eventID
+      userID
       createdAt
       updatedAt
-      eventDocumentsId
     }
   }
 `;
@@ -157,19 +60,10 @@ export const listDocuments = /* GraphQL */ `
       items {
         id
         url
-        event {
-          id
-          name
-          date
-          place
-          open
-          close
-          createdAt
-          updatedAt
-        }
+        eventID
+        userID
         createdAt
         updatedAt
-        eventDocumentsId
       }
       nextToken
     }
@@ -180,28 +74,10 @@ export const getComment = /* GraphQL */ `
     getComment(id: $id) {
       id
       content
-      event {
-        id
-        name
-        date
-        place
-        open
-        close
-        entrants {
-          nextToken
-        }
-        documents {
-          nextToken
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      eventID
+      userID
       createdAt
       updatedAt
-      eventCommentsId
     }
   }
 `;
@@ -215,19 +91,10 @@ export const listComments = /* GraphQL */ `
       items {
         id
         content
-        event {
-          id
-          name
-          date
-          place
-          open
-          close
-          createdAt
-          updatedAt
-        }
+        eventID
+        userID
         createdAt
         updatedAt
-        eventCommentsId
       }
       nextToken
     }
@@ -238,38 +105,10 @@ export const getEventUser = /* GraphQL */ `
     getEventUser(id: $id) {
       id
       status
-      event {
-        id
-        name
-        date
-        place
-        open
-        close
-        entrants {
-          nextToken
-        }
-        documents {
-          nextToken
-        }
-        comments {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
-      user {
-        id
-        name
-        entrants {
-          nextToken
-        }
-        createdAt
-        updatedAt
-      }
+      eventID
+      userID
       createdAt
       updatedAt
-      eventEntrantsId
-      userEntrantsId
     }
   }
 `;
@@ -283,26 +122,10 @@ export const listEventUsers = /* GraphQL */ `
       items {
         id
         status
-        event {
-          id
-          name
-          date
-          place
-          open
-          close
-          createdAt
-          updatedAt
-        }
-        user {
-          id
-          name
-          createdAt
-          updatedAt
-        }
+        eventID
+        userID
         createdAt
         updatedAt
-        eventEntrantsId
-        userEntrantsId
       }
       nextToken
     }

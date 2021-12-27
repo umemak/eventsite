@@ -11,7 +11,7 @@
 
 <script>
 import { API } from "aws-amplify";
-import { getEvent, getUser } from "../graphql/queries";
+import { getEvent, getEventUser } from "../graphql/queries";
 import { createEventUser } from "../graphql/mutations";
 
 export default {
@@ -21,12 +21,7 @@ export default {
   },
   async created() {
     this.getEvent();
-    this.getUser();
-    this.event.entrants.forEach((item) => {
-      if (item.id == this.$store.state.user.id) {
-        this.entried = true;
-      }
-    });
+    this.getEventUser();
   },
   data() {
     return {
@@ -48,14 +43,14 @@ export default {
           console.log(error);
         });
     },
-    async getUser() {
+    async getEventUser() {
       await API.graphql({
-        query: getUser,
-        variables: { id: this.$store.state.user.id },
+        query: getEventUser,
+        variables: { eventID: this.eventId, userID: this.$store.state.user.id },
       })
         .then((result) => {
           console.log(result);
-          this.user = result.data.getUser;
+          this.entried=true;
         })
         .catch((error) => {
           console.log(error);
@@ -64,7 +59,7 @@ export default {
     async entry() {
       await API.graphql({
         query: createEventUser,
-        variables: { input: this.event },
+        variables: { input: {eventID: this.eventId, userID: this.$store.state.user.id, status: "entry"} },
       })
         .then((result) => {
           console.log(result);

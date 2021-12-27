@@ -9,32 +9,26 @@ type Event @model {
   place: String!
   open: AWSDateTime!
   close: AWSDateTime!
-  entrants: [EventUser] @hasMany
-  documents: [Document] @hasMany
-  comments: [Comment] @hasMany
-}
-
-type User @model {
-  id: ID!
-  name: String!
-  entrants: [EventUser] @hasMany
+  userID: ID!
 }
 
 type Document @model {
   id: ID!
   url: String!
-  event: Event @belongsTo
+  eventID: ID!
+  userID: ID!
 }
 
 type Comment @model {
   id: ID!
   content: String!
-  event: Event @belongsTo
+  eventID: ID!
+  userID: ID!
 }
 
 type EventUser @model {
   id: ID!
   status: String!
-  event: Event @belongsTo
-  user: User @belongsTo
+  eventID: ID!
+  userID: ID!
 }
