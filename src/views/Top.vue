@@ -24,6 +24,7 @@ export default {
   name: "Top",
   async created() {
     this.getEvents();
+    console.log(this.$store.state.user.attributes.sub);
   },
   data() {
     return {

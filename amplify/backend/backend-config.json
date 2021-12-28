@@ -1,6 +1,6 @@
 {
   "auth": {
-    "eventsite37556542": {
+    "eventsitedf29485b": {
       "service": "Cognito",
       "providerPlugin": "awscloudformation",
       "dependsOn": [],
@@ -40,13 +40,6 @@
           "additionalAuthenticationProviders": []
         }
       }
-    }
-  },
-  "hosting": {
-    "amplifyhosting": {
-      "service": "amplifyhosting",
-      "providerPlugin": "awscloudformation",
-      "type": "manual"
     }
   }
 }

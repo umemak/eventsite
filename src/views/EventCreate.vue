@@ -34,8 +34,9 @@ export default {
   methods: {
     async createEvent() {
       const { name, date, place, open, close } = this;
+      const userID = this.$store.state.user.attributes.sub;
       if (!name || !date) return;
-      const event = { name, date, place, open, close };
+      const event = { name, date, place, open, close, userID };
       await API.graphql({
         query: createEvent,
         variables: { input: event },

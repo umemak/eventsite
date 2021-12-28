@@ -4,7 +4,7 @@
 
     <div v-if="entried">エントリー済みです</div>
     <div v-else>
-      {{ event.name }}にエントリーします <button @click="entry">実行</button>
+      {{ eventName }}にエントリーします <button @click="entry">実行</button>
     </div>
   </div>
 </template>
@@ -26,7 +26,7 @@ export default {
   data() {
     return {
       entried: false,
-      event: null,
+      eventName: "",
     };
   },
   methods: {
@@ -37,7 +37,7 @@ export default {
       })
         .then((result) => {
           console.log(result);
-          this.event = result.data.getEvent;
+          this.eventName = result.data.getEvent.name;
         })
         .catch((error) => {
           console.log(error);
@@ -46,7 +46,7 @@ export default {
     async getEventUser() {
       await API.graphql({
         query: getEventUser,
-        variables: { eventID: this.eventId, userID: this.$store.state.user.id },
+        variables: { eventID: this.eventId, userID: this.$store.state.user.attributes.sub },
       })
         .then((result) => {
           console.log(result);
@@ -59,7 +59,7 @@ export default {
     async entry() {
       await API.graphql({
         query: createEventUser,
-        variables: { input: {eventID: this.eventId, userID: this.$store.state.user.id, status: "entry"} },
+        variables: { input: {eventID: this.eventId, userID: this.$store.state.user.attributes.sub, status: "entry"} },
       })
         .then((result) => {
           console.log(result);

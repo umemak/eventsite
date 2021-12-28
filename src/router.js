@@ -2,8 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import store from "@/store/index.js";
 import Auth from "@aws-amplify/auth";
 import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
-import { API } from "aws-amplify";
-import { getUser } from "./graphql/queries";
 
 const routes = [
   {
@@ -90,27 +88,12 @@ function getAuthenticatedUser() {
     });
 }
 
-async function checkUser(user) {
-  console.log(user);
-  await API.graphql({
-    query: getUser,
-    variables: { id: user.id },
-  })
-    .then((result) => {
-      console.log(result);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-}
-
 let user;
 
 router.beforeResolve(async (to, from, next) => {
   user = await getAuthenticatedUser();
 
   if (to.name === "Login" && user) {
-    checkUser(user);
     return next({ name: "MyPage" });
   }
 
