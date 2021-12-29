@@ -28,26 +28,30 @@
         </ul>
       </li>
     </ul>
-    <router-link
-      custom
-      v-slot="{ navigate }"
-      :to="{ name: 'Entry', params: { eventId: eventId } }"
-    >
-      <button @click="navigate">参加エントリー</button>
-    </router-link>
-    <router-link
-      custom
-      v-slot="{ navigate }"
-      :to="{ name: 'Cancel', params: { eventId: eventId } }"
-    >
-      <button @click="navigate">参加キャンセル</button>
-    </router-link>
+    <div v-if="entried">
+      <router-link
+        custom
+        v-slot="{ navigate }"
+        :to="{ name: 'Cancel', params: { eventId: eventId } }"
+      >
+        <button @click="navigate">参加キャンセル</button>
+      </router-link>
+    </div>
+    <div v-else>
+      <router-link
+        custom
+        v-slot="{ navigate }"
+        :to="{ name: 'Entry', params: { eventId: eventId } }"
+      >
+        <button @click="navigate">参加エントリー</button>
+      </router-link>
+    </div>
   </div>
 </template>
 
 <script>
 import { API } from "aws-amplify";
-import { getEvent,listEventUsers } from "../graphql/queries";
+import { getEvent, listEventUsers } from "../graphql/queries";
 
 export default {
   name: "Event",
@@ -65,7 +69,8 @@ export default {
         date: "",
         place: "",
       },
-      eventUsers:[],
+      eventUsers: [],
+      entried: false,
     };
   },
   methods: {
@@ -92,6 +97,14 @@ export default {
         .then((result) => {
           console.log(result);
           this.eventUsers = result.data.listEventUsers.items;
+          this.eventUsers.forEach((item) => {
+            if (
+              item.userID == this.$store.state.user.attributes.sub &&
+              item.status == "entry"
+            ) {
+              this.entried = true;
+            }
+          });
         })
         .catch((error) => {
           console.log(error);

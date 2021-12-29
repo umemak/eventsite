@@ -46,11 +46,14 @@ export default {
     async getEventUser() {
       await API.graphql({
         query: getEventUser,
-        variables: { eventID: this.eventId, userID: this.$store.state.user.attributes.sub },
+        variables: {
+          eventID: this.eventId,
+          userID: this.$store.state.user.attributes.sub,
+        },
       })
         .then((result) => {
           console.log(result);
-          this.entried=true;
+          this.entried = true;
         })
         .catch((error) => {
           console.log(error);
@@ -59,7 +62,13 @@ export default {
     async entry() {
       await API.graphql({
         query: createEventUser,
-        variables: { input: {eventID: this.eventId, userID: this.$store.state.user.attributes.sub, status: "entry"} },
+        variables: {
+          input: {
+            eventID: this.eventId,
+            userID: this.$store.state.user.attributes.sub,
+            status: "entry",
+          },
+        },
       })
         .then((result) => {
           console.log(result);
