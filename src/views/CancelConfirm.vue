@@ -11,7 +11,7 @@
 
 <script>
 import { API } from "aws-amplify";
-import { getEvent, getEventUser } from "../graphql/queries";
+import { getEvent, listEventUsers } from "../graphql/queries";
 import { updateEventUser } from "../graphql/mutations";
 
 export default {
@@ -51,12 +51,15 @@ export default {
         });
     },
     async getEventUser() {
+      let filter = {
+        and: [
+          { eventID: { eq: this.eventID } },
+          { userID: { eq: this.$store.state.user.attributes.sub } },
+        ],
+      };
       await API.graphql({
-        query: getEventUser,
-        variables: {
-          eventID: this.eventId,
-          userID: this.$store.state.user.attributes.sub,
-        },
+        query: listEventUsers,
+        variables: { filter: filter },
       })
         .then((result) => {
           console.log(result);
