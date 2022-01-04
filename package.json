@@ -12,6 +12,7 @@
     "aws-amplify": "^4.3.10",
     "aws-amplify-vue": "^2.1.5",
     "core-js": "^3.6.5",
+    "firebase": "^9.6.1",
     "vue": "^3.0.0",
     "vue-router": "^4.0.12",
     "vuex": "^4.0.2"
