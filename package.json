@@ -13,6 +13,8 @@
     "aws-amplify-vue": "^2.1.5",
     "core-js": "^3.6.5",
     "firebase": "^9.6.1",
+    "firebaseui": "^6.0.0",
+    "firebaseui-ja": "^1.0.0",
     "vue": "^3.0.0",
     "vue-router": "^4.0.12",
     "vuex": "^4.0.2"
