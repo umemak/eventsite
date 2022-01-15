@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import store from "@/store/index.js";
-import Auth from "@aws-amplify/auth";
-import { AuthState, onAuthUIStateChange } from "@aws-amplify/ui-components";
+import { auth } from './firebase/config';
+
 
 const routes = [
   {
@@ -74,7 +74,7 @@ const router = createRouter({
 })
 
 function getAuthenticatedUser() {
-  return Auth.currentAuthenticatedUser()
+  return auth.getAuthenticatedUser()
     .then((data) => {
       if (data && data.signInUserSession) {
         store.commit("setUser", data);
@@ -103,13 +103,13 @@ router.beforeResolve(async (to, from, next) => {
   return next();
 });
 
-onAuthUIStateChange((authState, authData) => {
-  if (authState === AuthState.SignedIn && authData) {
-    router.push({ name: "MyPage" });
-  }
-  if (authState === AuthState.SignedOut) {
-    router.push({ name: "Top" });
-  }
-});
+// onAuthUIStateChange((authState, authData) => {
+//   if (authState === AuthState.SignedIn && authData) {
+//     router.push({ name: "MyPage" });
+//   }
+//   if (authState === AuthState.SignedOut) {
+//     router.push({ name: "Top" });
+//   }
+// });
 
 export default router
